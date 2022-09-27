@@ -7753,6 +7753,7 @@ for (let i = 0; i < kanjiData.length; i++) {
 
     const jump = document.createElement('p');
     jump.innerHTML = i + 1 + ' - ' + (i + 100);
+    jump.className = 'fs-4';
     document.getElementById('kanjiList').appendChild(jump);
 
     const newDiv = document.createElement('div');
