@@ -10002,7 +10002,7 @@ const wordList2 = [
 ];
 
 for (let i = 0; i < wordList2.length; i++) {
-  const li = document.createElement('li');
-  li.innerHTML = wordList2[i];
+  const li = document.createElement('p');
+  li.innerHTML = i + 1 + '. ' + wordList2[i];
   document.getElementById('wordList2').appendChild(li);
 }

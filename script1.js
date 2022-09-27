@@ -15002,7 +15002,7 @@ const wordList1 = [
 ];
 
 for (let i = 0; i < wordList1.length; i++) {
-  const li = document.createElement('li');
-  li.innerHTML = wordList1[i];
+  const li = document.createElement('p');
+  li.innerHTML = i + 1 + '. ' + wordList1[i];
   document.getElementById('wordList1').appendChild(li);
 }
