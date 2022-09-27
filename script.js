@@ -7757,7 +7757,7 @@ for (let i = 0; i < kanjiData.length; i++) {
     document.getElementById('kanjiList').appendChild(jump);
 
     const newDiv = document.createElement('div');
-    newDiv.className = 'd-inline-flex flex-wrap gap-3';
+    newDiv.className = 'd-inline-flex flex-wrap gap-3 justify-content-center';
     newDiv.id = 'kanji' + multiplier;
     document.getElementById('kanjiList').appendChild(newDiv);
   }
