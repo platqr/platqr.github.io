@@ -3,11 +3,31 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>word list 2 · hello kanjis (・_・)ノ</title>
+    <meta name="color-scheme" content="light dark" />
+    <title>word list 2 · platqr (・_・)ノ</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./style.css" />
+
+    <!-- Must be inline and blocking: it stamps the theme before first paint,
+         so dark-theme visitors never see a flash of paper. -->
+    <script>
+      (function () {
+        var saved;
+        try { saved = localStorage.getItem('theme'); } catch (err) {}
+        document.documentElement.dataset.theme =
+          saved ||
+          (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      })();
+    </script>
   </head>
 
-  <body>
+  <body data-page="words2">
     <main class="page">
       <nav class="nav" id="nav"></nav>
 

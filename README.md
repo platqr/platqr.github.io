@@ -22,8 +22,19 @@ app.js                                       all rendering and filtering
 data/kanji.js  data/words1.js  data/words2.js   the lists themselves
 ```
 
-No build step, no dependencies, no external requests. Open `index.html` in a
-browser and it works, whether served over HTTP or straight off disk.
+No build step and no dependencies. The only external requests are the two
+Google Fonts hosts, for Archivo and Space Mono; Japanese glyphs come from the
+system font, so no CJK webfont is ever downloaded. Open `index.html` in a
+browser and it works, whether served over HTTP or straight off disk — without
+the network it simply falls back to Helvetica/Arial.
+
+## Design
+
+Warm paper, near-black ink, one hot accent, hairline rules and zero-padded
+section codes — after Ridge Racer Type 4 and The Designers Republic. Each list
+page carries its own accent, following the R4 team liveries. A light and a dark
+variant both ship; the site follows the system setting, and the header toggle
+overrides it.
 
 ## Adding a word
 

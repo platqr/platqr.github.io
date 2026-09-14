@@ -1,38 +1,78 @@
-/* Replaces the Bootstrap CDN build; these are the only styles the site ever used. */
+/* ============================================================================
+   platqr — visual identity
+   Ridge Racer Type 4 / Designers Republic: warm paper, near-black ink, one hot
+   accent, hairline rules, tracked-out uppercase, zero-padded codes.
+   ========================================================================= */
 
 :root {
-  --bg: #212529;
-  --fg: #f8f9fa;
-  --muted: #adb5bd;
-  --link: #6ea8fe;
-  --rule: #495057;
+  --paper: #edeae3;
+  --panel: #e4e0d7;
+  --ink: #14120f;
+  --muted: #6b665c;
+  --rule: #c9c3b6;
+  --accent: #ff4d00;
+
+  --sans: Archivo, 'Helvetica Neue', Arial, 'Hiragino Sans',
+    'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Noto Sans CJK JP', Meiryo,
+    sans-serif;
+  --mono: 'Space Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+
+/* Every token is defined on bare :root above, so the theme blocks below only
+   ever redefine values — nothing gets its only definition inside a query. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --paper: #14120f;
+    --panel: #1e1b17;
+    --ink: #edeae3;
+    --muted: #8a8377;
+    --rule: #35302a;
+    --accent: #ff5e14;
+  }
+}
+
+:root[data-theme='dark'] {
+  --paper: #14120f;
+  --panel: #1e1b17;
+  --ink: #edeae3;
+  --muted: #8a8377;
+  --rule: #35302a;
+  --accent: #ff5e14;
+}
+
+/* Per-page accent, after the R4 team liveries. Used only on rules and markers,
+   never as text colour, so contrast never depends on it. */
+body[data-page='words1'] { --accent: #0b63ce; }
+body[data-page='words2'] { --accent: #a07800; }
+
+:root[data-theme='dark'] body[data-page='words1'] { --accent: #4d9bff; }
+:root[data-theme='dark'] body[data-page='words2'] { --accent: #e8b800; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) body[data-page='words1'] { --accent: #4d9bff; }
+  :root:not([data-theme='light']) body[data-page='words2'] { --accent: #e8b800; }
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--fg);
-  font-family: system-ui, -apple-system, 'Hiragino Sans', 'Yu Gothic',
-    Meiryo, 'Segoe UI', Roboto, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-synthesis-weight: none;
 }
 
 .page {
   max-width: 1140px;
   margin: 0 auto;
-  padding: 1.5rem;
-}
-
-a {
-  color: var(--link);
-}
-
-a[aria-current='page'] {
-  color: var(--fg);
-  text-decoration: none;
+  padding: clamp(1rem, 4vw, 2.5rem);
 }
 
 hr {
@@ -43,89 +83,273 @@ hr {
 
 /* Header ------------------------------------------------------------------ */
 
-.nav h1 {
-  font-size: inherit;
-  font-weight: normal;
-  margin: 0;
-}
-
 .nav {
   display: flex;
-  justify-content: space-between;
-  font-size: 1.5rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem clamp(1rem, 4vw, 2.5rem);
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--accent);
 }
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-right: auto;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: clamp(1rem, 3.6vw, 1.375rem);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.brand-ja {
+  font-size: 0.8125rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+}
+
+.brand-ver {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.nav-links {
+  display: flex;
+  gap: clamp(0.9rem, 4vw, 2.25rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-links a {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.1rem;
+  min-height: 44px; /* touch target */
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+}
+
+.nav-lat {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.nav-ja {
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.nav-links a:hover {
+  border-bottom-color: var(--rule);
+}
+
+.nav-links a[aria-current='page'] {
+  border-bottom-color: var(--accent);
+}
+
+.nav-links a[aria-current='page'] .nav-lat::before {
+  content: '[';
+  margin-right: 0.4em;
+  color: var(--accent);
+}
+
+.nav-links a[aria-current='page'] .nav-lat::after {
+  content: ']';
+  margin-left: 0.4em;
+  color: var(--accent);
+}
+
+.theme {
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.theme:hover {
+  color: var(--ink);
+  border-color: var(--accent);
+}
+
+/* Filter ------------------------------------------------------------------ */
 
 .search {
   display: flex;
-  align-items: baseline;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 0.75rem;
-  margin: 1.5rem 0;
-  font-size: 1rem;
+  margin: 1.75rem 0;
 }
 
+.search label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.search label::after {
+  content: ' ▸';
+  color: var(--accent);
+}
+
+/* Stays at 1rem/16px: anything smaller makes iOS Safari zoom on focus. */
 .search input {
-  flex: 1;
+  flex: 1 1 12rem;
   min-width: 0;
-  padding: 0.5rem 0.75rem;
-  font: inherit;
-  font-size: 1.25rem;
-  color: var(--fg);
-  background: #2b3035;
+  padding: 0.65rem 0.8rem;
+  font-family: var(--sans);
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  background: var(--panel);
   border: 1px solid var(--rule);
-  border-radius: 0.375rem;
+  border-radius: 0;
 }
 
 .search input:focus {
-  outline: 2px solid var(--link);
+  outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
 .count {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
   color: var(--muted);
   white-space: nowrap;
 }
 
+/* On narrow screens the input takes a line of its own, so pair the label and
+   the count on the line above it rather than leaving the count stranded. */
+@media (max-width: 640px) {
+  .search {
+    gap: 0.5rem 0.75rem;
+  }
+
+  .search label {
+    order: 1;
+  }
+
+  .count {
+    order: 2;
+    margin-left: auto;
+  }
+
+  .search input {
+    order: 3;
+    flex: 1 0 100%;
+  }
+}
+
 /* Lists ------------------------------------------------------------------- */
 
-/* content-visibility lets the browser skip layout for offscreen rows, which is
-   what keeps a 15,000-entry list responsive. The intrinsic size stops the
-   scrollbar from jittering as rows are skipped. */
-.row {
-  margin: 0 0 1rem;
-  content-visibility: auto;
-  contain-intrinsic-size: auto 2.75rem;
-}
-
-.numbered .row {
-  font-size: 1.75rem;
-}
-
 .grid-head {
-  font-size: 1.5rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 2.5rem 0 0;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--rule);
+}
+
+.sec {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.sec::before {
+  content: '';
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.6rem;
+  background: var(--accent);
+}
+
+.range {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
   color: var(--muted);
 }
 
 .grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  font-size: 2.5rem;
+  gap: clamp(0.5rem, 2.5vw, 1.1rem);
+  margin: 1.25rem 0 0;
+  font-size: clamp(1.75rem, 6vw, 2.5rem);
 }
 
 .grid p {
   margin: 0;
 }
 
+/* content-visibility lets the browser skip layout for offscreen rows, which is
+   what keeps a 15,000-entry list responsive. The intrinsic size stops the
+   scrollbar from jittering as rows are skipped. */
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(0.75rem, 3vw, 1.5rem);
+  margin: 0;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--rule);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 3rem;
+}
+
+.rank {
+  flex: 0 0 auto;
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.word {
+  font-size: clamp(1.125rem, 4vw, 1.5rem);
+}
+
 /* Lyrics ------------------------------------------------------------------ */
 
 .lyrics {
-  font-size: 1.5rem;
+  max-width: 46rem;
+  font-size: clamp(1rem, 3.4vw, 1.25rem);
 }
 
 .lyrics h1 {
-  font-size: 2rem;
   margin: 0 0 1.5rem;
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .lyrics p {

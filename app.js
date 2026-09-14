@@ -1,13 +1,14 @@
-/* Rendering and filtering for every list page. The data lives in data/*.js,
-   which set one global each; the page picks one via data-source on its mount. */
+/* Rendering, filtering and theming for every list page. The data lives in
+   data/*.js, which set one global each; the page picks one via data-source on
+   its mount. */
 
 (function () {
   'use strict';
 
   var PAGES = [
-    { file: 'index.html', label: 'kanji' },
-    { file: 'wordList1.html', label: 'w1' },
-    { file: 'wordList2.html', label: 'w2' },
+    { file: 'index.html', label: 'kanji', ja: '漢字' },
+    { file: 'wordList1.html', label: 'w1', ja: '単語一' },
+    { file: 'wordList2.html', label: 'w2', ja: '単語二' },
   ];
 
   var SOURCES = {
@@ -18,6 +19,47 @@
 
   var CHUNK = 100;
   var DEBOUNCE_MS = 120;
+
+  function pad(value, width) {
+    return String(value).padStart(width, '0');
+  }
+
+  function span(className, text) {
+    var el = document.createElement('span');
+    el.className = className;
+    el.textContent = text;
+    return el;
+  }
+
+  /* Theme ----------------------------------------------------------------- */
+
+  // The <head> boot script has already stamped data-theme before first paint;
+  // this only handles switching it afterwards.
+  function renderThemeToggle() {
+    var button = document.createElement('button');
+    button.className = 'theme';
+    button.type = 'button';
+
+    function sync() {
+      var dark = document.documentElement.dataset.theme === 'dark';
+      button.textContent = dark ? 'display: ink' : 'display: paper';
+      button.setAttribute('aria-pressed', String(dark));
+    }
+
+    button.addEventListener('click', function () {
+      var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      try {
+        localStorage.setItem('theme', next);
+      } catch (err) {
+        /* private browsing — the choice just won't persist */
+      }
+      sync();
+    });
+
+    sync();
+    return button;
+  }
 
   /* Header ---------------------------------------------------------------- */
 
@@ -32,18 +74,33 @@
     var here = currentPage();
     var frag = document.createDocumentFragment();
 
+    var brand = document.createElement('div');
+    brand.className = 'brand';
+
     var title = document.createElement('h1');
-    title.textContent = 'hello kanjis';
-    frag.appendChild(title);
+    title.textContent = 'platqr';
+    brand.appendChild(title);
+
+    brand.appendChild(span('brand-ja', '漢字'));
+    brand.appendChild(span('brand-ver', 'ver 2.1'));
+    frag.appendChild(brand);
+
+    var links = document.createElement('ul');
+    links.className = 'nav-links';
 
     PAGES.forEach(function (page) {
+      var item = document.createElement('li');
       var link = document.createElement('a');
       link.href = './' + page.file;
-      link.textContent = page.label;
       if (page.file === here) link.setAttribute('aria-current', 'page');
-      frag.appendChild(link);
+      link.appendChild(span('nav-lat', page.label));
+      link.appendChild(span('nav-ja', page.ja));
+      item.appendChild(link);
+      links.appendChild(item);
     });
 
+    frag.appendChild(links);
+    frag.appendChild(renderThemeToggle());
     mount.replaceChildren(frag);
   }
 
@@ -52,10 +109,13 @@
   // `matches` is a list of indices into `items`, so the rank shown is always the
   // entry's position in the full list, not its position among the matches.
   function renderNumbered(frag, items, matches) {
+    var width = String(items.length).length;
+
     matches.forEach(function (index) {
       var row = document.createElement('p');
       row.className = 'row';
-      row.textContent = index + 1 + '. ' + items[index];
+      row.appendChild(span('rank', pad(index + 1, width)));
+      row.appendChild(span('word', items[index]));
       frag.appendChild(row);
     });
   }
@@ -65,12 +125,15 @@
 
     matches.forEach(function (index, position) {
       if (position % CHUNK === 0) {
-        frag.appendChild(document.createElement('hr'));
-
         var head = document.createElement('p');
         head.className = 'grid-head';
-        head.textContent =
-          position + 1 + ' - ' + Math.min(position + CHUNK, matches.length);
+        head.appendChild(span('sec', 'section ' + pad(position / CHUNK + 1, 3)));
+        head.appendChild(
+          span(
+            'range',
+            pad(position + 1, 4) + ' — ' + pad(Math.min(position + CHUNK, matches.length), 4)
+          )
+        );
         frag.appendChild(head);
 
         grid = document.createElement('div');
@@ -87,6 +150,7 @@
   function initList(mount, items, mode) {
     var search = document.getElementById('search');
     var count = document.getElementById('count');
+    var width = String(items.length).length;
 
     function draw(query) {
       var matches = [];
@@ -105,7 +169,7 @@
       }
       mount.replaceChildren(frag);
 
-      count.textContent = matches.length + ' / ' + items.length;
+      count.textContent = pad(matches.length, width) + '/' + items.length;
     }
 
     draw('');
