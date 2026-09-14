@@ -92,7 +92,7 @@ window.GAMES = [
     platform: "PC",
     status: "playing",
     years: [],
-    hours: 25,
+    hours: 40,
     progress: 2,
   },
   {
