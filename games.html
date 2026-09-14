@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
-    <title>word list 1 · platqr (・_・)ノ</title>
+    <title>games · platqr (・_・)ノ</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,8 +14,6 @@
     />
     <link rel="stylesheet" href="./style.css" />
 
-    <!-- Must be inline and blocking: it stamps the theme before first paint,
-         so dark-theme visitors never see a flash of paper. -->
     <script>
       (function () {
         var saved;
@@ -27,27 +25,39 @@
     </script>
   </head>
 
-  <body data-page="words1">
+  <body data-page="games">
     <main class="page">
       <nav class="nav" id="nav"></nav>
 
-      <div class="search">
-        <label for="search">filter</label>
-        <input
-          id="search"
-          type="search"
-          autocomplete="off"
-          autocapitalize="off"
-          spellcheck="false"
-          placeholder="type to filter…"
-        />
-        <span class="count" id="count"></span>
-      </div>
+      <div class="list-toggle" id="sort"></div>
 
-      <div id="list" data-source="words1" data-mode="numbered"></div>
+      <section>
+        <div class="page-head">
+          <h2 class="sec">now playing</h2>
+          <span class="range" id="count-playing"></span>
+        </div>
+        <div class="game-grid" id="games-playing"></div>
+      </section>
+
+      <section>
+        <div class="page-head">
+          <h2 class="sec">backlog</h2>
+          <span class="range" id="count-backlog"></span>
+        </div>
+        <div class="game-grid" id="games-backlog"></div>
+      </section>
+
+      <section>
+        <div class="page-head">
+          <h2 class="sec">finished</h2>
+          <span class="range" id="count-finished"></span>
+        </div>
+        <div class="game-grid" id="games-finished"></div>
+      </section>
+
     </main>
 
-    <script src="./data/words1.js"></script>
+    <script src="./data/games.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>

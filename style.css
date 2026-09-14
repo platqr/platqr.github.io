@@ -1,9 +1,3 @@
-/* ============================================================================
-   platqr — visual identity
-   Ridge Racer Type 4 / Designers Republic: warm paper, near-black ink, one hot
-   accent, hairline rules, tracked-out uppercase, zero-padded codes.
-   ========================================================================= */
-
 :root {
   --paper: #edeae3;
   --panel: #e4e0d7;
@@ -18,8 +12,6 @@
   --mono: 'Space Mono', ui-monospace, Menlo, Consolas, monospace;
 }
 
-/* Every token is defined on bare :root above, so the theme blocks below only
-   ever redefine values — nothing gets its only definition inside a query. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     --paper: #14120f;
@@ -40,21 +32,26 @@
   --accent: #ff5e14;
 }
 
-/* Per-page accent, after the R4 team liveries. Used only on rules and markers,
-   never as text colour, so contrast never depends on it. */
-body[data-page='words1'] { --accent: #0b63ce; }
-body[data-page='words2'] { --accent: #a07800; }
+body[data-page='words'] { --accent: #0b63ce; }
+body[data-page='words'][data-list='2'] { --accent: #a07800; }
+body[data-page='games'] { --accent: #6b3fa0; }
 
-:root[data-theme='dark'] body[data-page='words1'] { --accent: #4d9bff; }
-:root[data-theme='dark'] body[data-page='words2'] { --accent: #e8b800; }
+:root[data-theme='dark'] body[data-page='words'] { --accent: #4d9bff; }
+:root[data-theme='dark'] body[data-page='words'][data-list='2'] { --accent: #e8b800; }
+:root[data-theme='dark'] body[data-page='games'] { --accent: #a98bff; }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) body[data-page='words1'] { --accent: #4d9bff; }
-  :root:not([data-theme='light']) body[data-page='words2'] { --accent: #e8b800; }
+  :root:not([data-theme='light']) body[data-page='words'] { --accent: #4d9bff; }
+  :root:not([data-theme='light']) body[data-page='words'][data-list='2'] { --accent: #e8b800; }
+  :root:not([data-theme='light']) body[data-page='games'] { --accent: #a98bff; }
 }
 
 * {
   box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 html {
@@ -81,8 +78,6 @@ hr {
   margin: 1.5rem 0;
 }
 
-/* Header ------------------------------------------------------------------ */
-
 .nav {
   display: flex;
   flex-wrap: wrap;
@@ -108,17 +103,40 @@ hr {
   text-transform: uppercase;
 }
 
-.brand-ja {
-  font-size: 0.8125rem;
-  letter-spacing: 0.2em;
-  color: var(--muted);
-}
-
 .brand-ver {
   font-family: var(--mono);
   font-size: 0.6875rem;
   letter-spacing: 0.1em;
   color: var(--muted);
+}
+
+.nav-menu {
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(0.9rem, 4vw, 2.25rem);
+}
+
+.nav-toggle {
+  display: none;
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: none;
+  border: 1px solid var(--accent);
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.nav-toggle::after {
+  content: ' ▾';
+}
+
+.nav[data-open] .nav-toggle::after {
+  content: ' ▴';
 }
 
 .nav-links {
@@ -134,7 +152,7 @@ hr {
   flex-direction: column;
   justify-content: flex-end;
   gap: 0.1rem;
-  min-height: 44px; /* touch target */
+  min-height: 44px;
   color: var(--ink);
   text-decoration: none;
   border-bottom: 3px solid transparent;
@@ -192,7 +210,50 @@ hr {
   border-color: var(--accent);
 }
 
-/* Filter ------------------------------------------------------------------ */
+@media (max-width: 640px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    width: 100%;
+    padding-top: 0.75rem;
+  }
+
+  .nav[data-open] .nav-menu {
+    display: flex;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 100%;
+  }
+
+  .nav-links a {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.35rem 0;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--rule);
+  }
+
+  .nav-links a[aria-current='page'] {
+    border-bottom-width: 3px;
+    border-bottom-color: var(--accent);
+  }
+
+  .theme {
+    margin-top: 0.5rem;
+  }
+}
 
 .search {
   display: flex;
@@ -215,7 +276,6 @@ hr {
   color: var(--accent);
 }
 
-/* Stays at 1rem/16px: anything smaller makes iOS Safari zoom on focus. */
 .search input {
   flex: 1 1 12rem;
   min-width: 0;
@@ -242,8 +302,6 @@ hr {
   white-space: nowrap;
 }
 
-/* On narrow screens the input takes a line of its own, so pair the label and
-   the count on the line above it rather than leaving the count stranded. */
 @media (max-width: 640px) {
   .search {
     gap: 0.5rem 0.75rem;
@@ -263,8 +321,6 @@ hr {
     flex: 1 0 100%;
   }
 }
-
-/* Lists ------------------------------------------------------------------- */
 
 .grid-head {
   display: flex;
@@ -305,15 +361,131 @@ hr {
   gap: clamp(0.5rem, 2.5vw, 1.1rem);
   margin: 1.25rem 0 0;
   font-size: clamp(1.75rem, 6vw, 2.5rem);
+
+  content-visibility: auto;
+  contain-intrinsic-size: auto 340px;
 }
 
 .grid p {
   margin: 0;
 }
 
-/* content-visibility lets the browser skip layout for offscreen rows, which is
-   what keeps a 15,000-entry list responsive. The intrinsic size stops the
-   scrollbar from jittering as rows are skipped. */
+.word-grid .grid {
+  gap: 0.4rem clamp(0.9rem, 2.2vw, 1.5rem);
+  font-size: clamp(1.0625rem, 2.6vw, 1.375rem);
+}
+
+.list-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin: 1.25rem 0 0.5rem;
+}
+
+.sort-label {
+  margin-right: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.sort-label::after {
+  content: ' \25B8';
+  color: var(--accent);
+}
+
+.tab-dir {
+  font-size: 0.5625rem;
+  color: var(--accent);
+}
+
+.list-tab {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.5rem 0.9rem;
+  color: var(--ink);
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.list-tab:hover {
+  border-color: var(--accent);
+}
+
+.list-tab[aria-current] {
+  border-color: var(--accent);
+  border-bottom-width: 3px;
+}
+
+.tab-lat {
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.list-tab[aria-current] .tab-lat::before {
+  content: '[';
+  margin-right: 0.4em;
+  color: var(--accent);
+}
+
+.list-tab[aria-current] .tab-lat::after {
+  content: ']';
+  margin-left: 0.4em;
+  color: var(--accent);
+}
+
+.tab-ja {
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.cross {
+  gap: clamp(0.6rem, 2.5vw, 1.25rem);
+}
+
+.cross-head {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom-color: var(--accent);
+  content-visibility: visible;
+}
+
+.cross-head .cross-word {
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.cross-rank {
+  flex: 0 0 5ch;
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  text-align: right;
+}
+
+.cross-rank.absent {
+  color: var(--rule);
+}
+
+.cross-word {
+  font-size: clamp(1.125rem, 4vw, 1.5rem);
+}
+
 .row {
   display: flex;
   align-items: baseline;
@@ -337,7 +509,114 @@ hr {
   font-size: clamp(1.125rem, 4vw, 1.5rem);
 }
 
-/* Lyrics ------------------------------------------------------------------ */
+.page-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1.75rem 0 0;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--rule);
+}
+
+.page-head .sec {
+  margin: 0;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  margin: 1.25rem 0 0;
+}
+
+@media (max-width: 880px) {
+  .game-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .game-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: clamp(0.75rem, 2vw, 1rem);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--accent);
+}
+
+.game-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.game .rank {
+  font-size: 0.6875rem;
+}
+
+.game-years {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.game-title {
+  font-size: clamp(1rem, 2.2vw, 1.1875rem);
+  font-weight: 600;
+  line-height: 1.15;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.progress {
+  display: flex;
+  gap: 3px;
+
+  margin-top: auto;
+  padding-top: 0.7rem;
+}
+
+.seg {
+  flex: 1;
+  height: 6px;
+  background: var(--rule);
+}
+
+.seg.on {
+  background: var(--accent);
+}
+
+.seg:nth-child(6) {
+  margin-left: 5px;
+}
+
+.game-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.game-hours {
+  white-space: nowrap;
+  color: var(--accent);
+}
 
 .lyrics {
   max-width: 46rem;

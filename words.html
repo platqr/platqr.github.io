@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
-    <title>word list 2 · platqr (・_・)ノ</title>
+    <title>words · platqr (・_・)ノ</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,8 +14,6 @@
     />
     <link rel="stylesheet" href="./style.css" />
 
-    <!-- Must be inline and blocking: it stamps the theme before first paint,
-         so dark-theme visitors never see a flash of paper. -->
     <script>
       (function () {
         var saved;
@@ -27,7 +25,7 @@
     </script>
   </head>
 
-  <body data-page="words2">
+  <body data-page="words">
     <main class="page">
       <nav class="nav" id="nav"></nav>
 
@@ -39,14 +37,17 @@
           autocomplete="off"
           autocapitalize="off"
           spellcheck="false"
-          placeholder="type to filter…"
+          placeholder="type to filter both lists…"
         />
         <span class="count" id="count"></span>
       </div>
 
-      <div id="list" data-source="words2" data-mode="numbered"></div>
+      <div class="list-toggle" id="list-toggle"></div>
+
+      <div id="list" data-mode="words"></div>
     </main>
 
+    <script src="./data/words1.js"></script>
     <script src="./data/words2.js"></script>
     <script src="./app.js"></script>
   </body>
