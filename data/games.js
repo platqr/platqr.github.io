@@ -164,7 +164,7 @@ window.GAMES = [
     platform: "Nintendo Switch",
     status: "finished",
     years: [2025],
-    hours: 0,
+    hours: 30,
     progress: 10,
   },
   {

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
     <meta name="robots" content="noindex, nofollow" />
-    <title>games · platqr (・_・)ノ</title>
+    <title>lyrics · platqr (・_・)ノ</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,41 +27,23 @@
     </script>
   </head>
 
-  <body data-page="games">
+  <body data-page="lyrics">
     <main class="page">
       <nav class="nav" id="nav"></nav>
 
-      <div class="list-toggle" id="sort"></div>
+      <div class="list-toggle" id="song-toggle"></div>
 
-      <section>
-        <div class="page-head">
-          <h2 class="sec">now playing</h2>
-          <span class="range" id="count-playing"></span>
-        </div>
-        <div class="game-grid" id="games-playing"></div>
-      </section>
+      <div class="page-head">
+        <h2 class="sec" id="song-title"></h2>
+        <span class="range" id="count"></span>
+      </div>
 
-      <section>
-        <div class="page-head">
-          <h2 class="sec">backlog</h2>
-          <span class="range" id="count-backlog"></span>
-        </div>
-        <div class="game-grid" id="games-backlog"></div>
-      </section>
-
-      <section>
-        <div class="page-head">
-          <h2 class="sec">finished</h2>
-          <span class="range" id="count-finished"></span>
-        </div>
-        <div class="game-grid" id="games-finished"></div>
-      </section>
-
+      <div class="lyrics" id="lyrics"></div>
     </main>
 
     <script src="./hidden.js"></script>
-    <script src="./data/games.js"></script>
+    <script src="./data/lyrics.js"></script>
     <script src="./app.js"></script>
-    <script src="./games.js"></script>
+    <script src="./lyrics.js"></script>
   </body>
 </html>
