@@ -66,10 +66,10 @@ window.GAMES = [
   {
     title: "Elden Ring",
     platform: "PC",
-    status: "playing",
+    status: "backlog",
     years: [],
     hours: 60,
-    progress: 1,
+    progress: 0,
   },
   {
     title: "Persona 5 Royal",
@@ -122,10 +122,10 @@ window.GAMES = [
   {
     title: "Dragon Quest XI S: Echoes of an Elusive Age - Definitive Edition",
     platform: "PS4",
-    status: "playing",
+    status: "backlog",
     years: [],
     hours: 70,
-    progress: 2,
+    progress: 1,
   },
   {
     title: "Persona 4 Golden",
@@ -182,5 +182,37 @@ window.GAMES = [
     years: [2024],
     hours: 30,
     progress: 10,
+  },
+  {
+    title: "VA-11 Hall-A: Cyberpunk Bartender Action",
+    platform: "Nintendo Switch",
+    status: "backlog",
+    years: [],
+    hours: 13,
+    progress: 0,
+  },
+  {
+    title: "Undertale",
+    platform: "PC",
+    status: "backlog",
+    years: [],
+    hours: 10,
+    progress: 0,
+  },
+  {
+    title: "Chrono Trigger",
+    platform: "DS",
+    status: "backlog",
+    years: [],
+    hours: 25,
+    progress: 0,
+  },
+  {
+    title: "Silent Hill f",
+    platform: "PC",
+    status: "backlog",
+    years: [],
+    hours: 14,
+    progress: 0,
   },
 ];
