@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .paper { fill: #edeae3 }
+    .ink { fill: #14120f }
+    .accent { fill: #ff4d00 }
+    @media (prefers-color-scheme: dark) {
+      .paper { fill: #14120f }
+      .ink { fill: #edeae3 }
+      .accent { fill: #ff5e14 }
+    }
+  </style>
+  <rect class="paper" width="32" height="32" />
+  <rect class="accent" width="32" height="4" />
+  <path class="ink" fill-rule="evenodd" d="M6 10H26V22H10V28H6Z M10 14H22V18H10Z" />
+</svg>
